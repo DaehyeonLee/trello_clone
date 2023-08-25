@@ -1,10 +1,14 @@
 import { styled } from "styled-components";
+import { ITodo } from "../atoms";
 
-export const Card = styled.div`
+export const Card = styled.div<{ isDragging: boolean }>`
+  display: flex;
+  justify-content: space-between;
   padding: 10px 10px;
   margin-bottom: 5px;
   border-radius: 5px;
-  background-color: ${(props) => props.theme.cardColor};
+  background-color: ${(props) => (props.isDragging ? "tomato" : props.theme.cardColor)};
+  box-shadow: ${(props) => (props.isDragging ? "0px 2px 5px rgba(0,0,0,0.1)" : "none")};
 `;
 
 export const Wrapper = styled.div`
@@ -42,7 +46,25 @@ export const Title = styled.h2`
   font-size: 18px;
 `;
 
-export const Area = styled.div`
-  background-color: blue;
+interface IArea {
+  isDraggingFromThis: boolean;
+  isDraggingOver: boolean;
+}
+
+export const Area = styled.div<IArea>`
+  background-color: ${(props) => (props.isDraggingOver ? "pink" : props.isDraggingFromThis ? "red" : "blue")};
   flex-grow: 1;
+  transition: background-color 0.3s ease-in-out;
+`;
+
+export const Form = styled.form`
+  width: 100%;
+  input {
+    width: 100%;
+  }
+`;
+
+export const TrashButton = styled.button`
+  background-color: white;
+  border: none;
 `;

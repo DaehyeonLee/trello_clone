@@ -1,18 +1,28 @@
 import { Draggable } from "react-beautiful-dnd";
-import { Card } from "./Style";
+import { Card, TrashButton } from "./Style";
 import React from "react";
 
 interface IDraggableProps {
-  toDosItem: string;
+  toDoId: number;
+  toDoText: string;
   index: number;
 }
 
-const DraggableCard = ({ toDosItem, index }: IDraggableProps) => {
+const DraggableCard = ({ toDoId, toDoText, index }: IDraggableProps) => {
+  const onTrashButtonHandler = () => {
+    console.log();
+  };
   return (
-    <Draggable draggableId={toDosItem} index={index} key={toDosItem}>
-      {(provided) => (
-        <Card ref={provided.innerRef} {...provided.dragHandleProps} {...provided.draggableProps}>
-          {toDosItem}
+    <Draggable draggableId={toDoId + ""} index={index} key={toDoId}>
+      {(provided, snapshot) => (
+        <Card
+          isDragging={snapshot.isDragging}
+          ref={provided.innerRef}
+          {...provided.dragHandleProps}
+          {...provided.draggableProps}
+        >
+          {toDoText}
+          {<TrashButton onClick={onTrashButtonHandler}>🧻</TrashButton>}
         </Card>
       )}
     </Draggable>
